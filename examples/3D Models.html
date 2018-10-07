@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Hello World!</title>
+    <script src="../Build/Cesium/Cesium.js"></script>
+    <link  href="../Build/Cesium/Widgets/widgets.css" rel="stylesheet">
+</head>
+<body>
+<style>
+    @import url(E:/cesium20180809/Cesium-1.48/Apps/Sandcastle/templates/bucket.css);
+</style>
+<div id="cesiumContainer" class="fullSize"></div>
+<div id="loadingOverlay"><h1>Loading...</h1></div>
+<div id="toolbar"></div>
+<script>
+    var viewer = new Cesium.Viewer('cesiumContainer', {
+        infoBox : false,
+        selectionIndicator : false,
+        shadows : true,
+        shouldAnimate : true
+    });
+
+    function createModel(url, height) {
+        viewer.entities.removeAll();
+
+        var position = Cesium.Cartesian3.fromDegrees(-123.0744619, 44.0503706, height);
+        var heading = Cesium.Math.toRadians(135);
+        var pitch = 0;
+        var roll = 0;
+        var hpr = new Cesium.HeadingPitchRoll(heading, pitch, roll);
+        var orientation = Cesium.Transforms.headingPitchRollQuaternion(position, hpr);
+
+        var entity = viewer.entities.add({
+            name : url,
+            position : position,
+            orientation : orientation,
+            model : {
+                uri : url,
+                minimumPixelSize : 128,
+                maximumScale : 20000
+            }
+        });
+        viewer.trackedEntity = entity;
+    }
+
+    var options = [{
+        text : 'Aircraft',
+        onselect : function() {
+            createModel('E:/cesium20180809/Cesium-1.48/Apps/SampleData/models/CesiumAir/Cesium_Air.glb', 5000.0);
+        }
+    }, {
+        text : 'Ground Vehicle',
+        onselect : function() {
+            createModel('E:/cesium20180809/Cesium-1.48/Apps/SampleData/models/GroundVehicle/GroundVehicle.glb', 0);
+        }
+    }, {
+        text : 'Hot Air Balloon',
+        onselect : function() {
+            createModel('E:/cesium20180809/Cesium-1.48/Apps/SampleData/models/CesiumBalloon/CesiumBalloon.glb', 1000.0);
+        }
+    }, {
+        text : 'Milk Truck',
+        onselect : function() {
+            createModel('E:/cesium20180809/Cesium-1.48/Apps/SampleData/models/CesiumMilkTruck/CesiumMilkTruck-kmc.glb', 0);
+        }
+    }, {
+        text : 'Skinned Character',
+        onselect : function() {
+            createModel('E:/cesium20180809/Cesium-1.48/Apps/SampleData/models/CesiumMan/Cesium_Man.glb', 0);
+        }
+    }, {
+        text : 'Draco Compressed Model',
+        onselect : function() {
+            createModel('E:/cesium20180809/Cesium-1.48/Apps/SampleData/models/DracoCompressed/CesiumMilkTruck.gltf', 0);
+        }
+    }];
+
+    Sandcastle.addToolbarMenu(options);
+
+</script>
+</body>
+</html>

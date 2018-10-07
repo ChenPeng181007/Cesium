@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Hello World!</title>
+    <script src="../Build/Cesium/Cesium.js"></script>
+    <link  href="../Build/Cesium/Widgets/widgets.css" rel="stylesheet">
+</head>
+<body>
+<div id = "cesiumContainer">
+</div>
+<script>
+    var viewer = new Cesium.Viewer('cesiumContainer');
+
+    viewer.imageryLayers.addImageryProvider(new Cesium.WebMapTileServiceImageryProvider({
+        url: "http://t0.tianditu.com/vec_w/wmts?service=wmts&request=GetTile&version=1.0.0&LAYER=vec&tileMatrixSet=w&TileMatrix={TileMatrix}&TileRow={TileRow}&TileCol={TileCol}&style=default&format=tiles",
+        layer: "tdtVecBasicLayer",
+        style: "default",
+        format: "image/jpeg",
+        tileMatrixSetID: "GoogleMapsCompatible",
+        show: false
+    }));
+    viewer.imageryLayers.addImageryProvider(new Cesium.WebMapTileServiceImageryProvider({
+        url: "http://t0.tianditu.com/cva_w/wmts?service=wmts&request=GetTile&version=1.0.0&LAYER=cva&tileMatrixSet=w&TileMatrix={TileMatrix}&TileRow={TileRow}&TileCol={TileCol}&style=default&format=tiles",
+        layer: "tdtAnnoLayer",
+        style: "default",
+        format: "image/jpeg",
+        tileMatrixSetID: "GoogleMapsCompatible",
+        show: false
+    }));
+</script>
+</body>
+</html>

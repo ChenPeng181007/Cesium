@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Use correct character set. -->
+    <meta charset="utf-8">
+    <!-- Tell IE to use the latest, best version. -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- Make the application on mobile take up the full browser screen and disable user scaling. -->
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+    <title>Hello World!</title>
+    <!-- 这里引用的是Cesium的库，你以后所有的东西都从这个库中调用 -->
+    <script src="../Build/Cesium/Cesium.js"></script>
+    <!-- 这里是Cesium的viewer需要的css文件 -->
+    <style>
+        @import url(../Build/Cesium/Widgets/widgets.css);
+
+        html, body, #cesiumContainer {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+    </style>
+
+</head>
+<body>
+<!-- 这就是我们显示出来的东西了 -->
+<div id="cesiumContainer"></div>
+<!-- 这里我把js代码提出来写了 -->
+<script>
+    var viewer = new Cesium.Viewer('cesiumContainer');
+    //创建一个多边形实体对象
+    var wyoming = viewer.entities.add({
+        name: 'Wyoming',
+        polygon: {
+            //给出位置
+            hierarchy: Cesium.Cartesian3.fromDegreesArray([
+                -109.080842, 45.002073,
+                -105.91517, 45.002073,
+                -104.058488, 44.996596,
+                -104.053011, 43.002989,
+                -104.053011, 41.003906,
+                -105.728954, 40.998429,
+                -107.919731, 41.003906,
+                -109.04798, 40.998429,
+                -111.047063, 40.998429,
+                -111.047063, 42.000709,
+                -111.047063, 44.476286,
+                -111.05254, 45.002073]),
+            //离地高度
+            height: 0,
+            //材质（相当于填充色，但是可以填充的可不止颜色，可以看到这里是红色半透明）
+            material: Cesium.Color.RED.withAlpha(0.5),
+            //外边线
+            outline: true,
+            outlineColor: Cesium.Color.BLACK
+        }
+    });
+
+    //离地高度
+    wyoming.polygon.height = 300000;
+    //两个高度差组成了它的体积
+    wyoming.polygon.extrudedHeight = 300000;
+
+    //这是一个动画效果，进入后镜头就会自动转到这个实体处
+    viewer.zoomTo(wyoming);
+
+    wyoming.description = '\
+<img\
+  width="50%"\
+  style="float:left; margin: 0 1em 1em 0;"\
+  src="//imgsrc.baidu.com/baike/abpic/item/d35a10f45f26d158dcc4740e.jpg"/>\
+<p>\
+  一大块果冻，想不想吃？\
+</p>\
+<p>\
+  介绍: \
+  <a style="color: WHITE"\
+    target="_blank"\
+    href="http://imgsrc.baidu.com/baike/abpic/item/d35a10f45f26d158dcc4740e.jpg">点击查看</a>\
+</p>';
+
+</script>
+</body>
+</html>
